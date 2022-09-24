@@ -1,17 +1,16 @@
-import { initializeApp } from "firebase/app";
-import { getAuth } from "firebase/auth";
-
-
+import { initializeApp } from 'firebase/app'
+import { getAuth } from 'firebase/auth'
 
 const firebaseConfig = {
-  apiKey: "AIzaSyDKM2-RcTPSKl7ctKqo2hFFW7CoiTnr_co",
-  authDomain: "auth-developement-372e2.firebaseapp.com",
-  projectId: "auth-developement-372e2",
-  storageBucket: "auth-developement-372e2.appspot.com",
-  messagingSenderId: "1062211293831",
-  appId: "1:1062211293831:web:6c83a3a3e92d88c45d5e22"
-};
+	apiKey: process.env.REACT_APP_FIREBASE_API_KEY,
+	authDomain: process.env.REACT_APP_FIREBASE_AUTH_DOMAIN,
+	projectId: process.env.REACT_APP_FIREBASE_PROJECT_ID,
+	storageBucket: process.env.REACT_APP_FIREBASE_STORAGE_BUCKET,
+	messagingSenderId: process.env.REACT_APP_FIREBASE_MESSAGING_SENDER_ID,
+	appId: process.env.REACT_APP_FIREBASE_APP_ID,
+	measurementId: process.env.REACT_APP_FIREBASE_MEASUREMENT_ID,
+}
 
-const app = initializeApp(firebaseConfig);
+const app = initializeApp(firebaseConfig)
 
-export const auth = getAuth(app);
+export const auth = getAuth(app)
