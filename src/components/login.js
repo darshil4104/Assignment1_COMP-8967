@@ -1,8 +1,22 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
+import { useState } from 'react'
+import { signOut, signInWithEmailAndPassword } from 'firebase/auth'
+import Home from './home'
+
+import { auth } from '../firebase-config'
 
 export default function Login() {
-	console.log('Blah blah')
+	const [loginEmail, setLoginEmail] = useState('')
+	const [loginPassword, setLoginPassword] = useState('')
+
+	const login = async () => {
+		const user = signInWithEmailAndPassword(auth, loginEmail, loginPassword)
+	}
+	/*const logout = async () => {
+		await signOut(auth)
+	}*/
+
 	const comingSoon = (e) => {
 		e.preventDefault()
 		alert('Feature Coming Soon')
@@ -13,11 +27,12 @@ export default function Login() {
 			<div className="mb-3">
 				<label>Email</label>
 				<input
+					onChange={(e) => {
+						setLoginEmail(e.target.value)
+					}}
 					type="email"
 					className="form-control"
 					placeholder="Enter email"
-					//   value={this.email}
-					// onChange={this.onUpdateField}
 				/>
 			</div>
 			<div className="mb-3">
@@ -26,12 +41,13 @@ export default function Login() {
 					type="password"
 					className="form-control"
 					placeholder="Enter password"
-					//   value={this.password}
-					// onChange={this.onUpdateField}
+					onChange={(e) => {
+						setLoginPassword(e.target.value)
+					}}
 				/>
 			</div>
 			<div className="d-grid">
-				<button type="submit" className="btn btn-primary" onClick={comingSoon}>
+				<button type="submit" className="btn btn-primary" onClick={login}>
 					Sign In
 				</button>
 			</div>

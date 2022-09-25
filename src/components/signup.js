@@ -1,10 +1,28 @@
 import React from 'react'
-import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom'
+import { useState } from 'react'
+import { Link } from 'react-router-dom'
+import { createUserWithEmailAndPassword } from 'firebase/auth'
+import { auth } from '../firebase-config'
+import Home from './home'
+
 export default function SignUp() {
-	const comingSoon = (e) => {
+	const [registerEmail, setRegisterEmail] = useState('')
+	const [registerPassword, setRegisterPassword] = useState('')
+	const register = async () => {
+		const user = await createUserWithEmailAndPassword(auth, registerEmail, registerPassword)
+		return <redirect to={<Home />} />
+	}
+	/*const handleGoogleSignIn = async () => {
+		try {
+			await googleSignIn()
+		} catch (error) {
+			console.log(error)
+		}
+	}*/
+	/*const comingSoon = (e) => {
 		e.preventDefault()
 		alert('Feature Coming Soon')
-	}
+	}*/
 	return (
 		<form>
 			<h2>Sign Up</h2>
@@ -18,15 +36,29 @@ export default function SignUp() {
 			</div>
 			<div className="mb-3">
 				<label>Email address</label>
-				<input type="email" className="form-control" placeholder="Enter email" />
+				<input
+					type="email"
+					className="form-control"
+					placeholder="Enter email"
+					onChange={(e) => {
+						setRegisterEmail(e.target.value)
+					}}
+				/>
 			</div>
 			<div className="mb-4">
 				<label>Password</label>
-				<input type="password" className="form-control" placeholder="Enter password" />
+				<input
+					type="password"
+					className="form-control"
+					placeholder="Enter password"
+					onChange={(e) => {
+						setRegisterPassword(e.target.value)
+					}}
+				/>
 			</div>
 			<div className="d-grid">
-				<button type="submit" className="btn btn-primary" onClick={comingSoon}>
-					Sign Up
+				<button type="submit" className="btn btn-primary" onClick={register}>
+					SignUp With Email
 				</button>
 			</div>
 			<p className="signup text-right">
