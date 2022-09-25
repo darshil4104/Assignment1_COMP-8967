@@ -31,8 +31,8 @@ export default function Login() {
 				/>
 			</div>
 			<div className="d-grid">
-				<button type="submit" className="btn btn-primary" onClick={comingSoon}>
-					Sign In
+				<button type="submit" className="btn btn-primary" >
+					<a href='/profile' style={{color:"white"}}>Sign In</a>
 				</button>
 			</div>
 			<p className="signup text-right">
