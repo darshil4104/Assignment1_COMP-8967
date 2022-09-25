@@ -43,95 +43,95 @@ export default function SignUp() {
 		}
 	}
 	const register = async (e) => {
-		e.preventDefault()
-		setError(null)
-		setIsLoading(true)
-		try {
-			createUserWithEmailAndPassword(auth, registerEmail, registerPassword).then((response) => {
-				if (response) {
-					navigate('/signin')
-				}
-			})
-		} catch (error) {
-			setIsLoading(false)
-			setError(error)
-		}
-	}
-	/*const handleGoogleSignIn = async () => {
-		try {
-			await googleSignIn()
-		} catch (error) {
-			console.log(error)
-		}
-	}*/
-	/*const comingSoon = (e) => {
-		e.preventDefault()
-		alert('Feature Coming Soon')
-	}*/
-	return isLoading ? (
-		<div>Loader</div>
-	) : (
-		<form>
-			<h2>Sign Up</h2>
-			<div className="mb-3">
-				<label>First name</label>
-				<input type="text" className="form-control" placeholder="First name" />
-			</div>
-			<div className="mb-3">
-				<label>Last name</label>
-				<input type="text" className="form-control" placeholder="Last name" />
-			</div>
-			<div className="mb-3">
-				<label>Email address</label>
-				<input
-					type="email"
-					className="form-control"
-					placeholder="Enter email"
-					onChange={(e) => {
-						setRegisterEmail(e.target.value)
-					}}
-				/>
-			</div>
-			<div className="mb-4">
-				<label>Password</label>
-				<input
-					type="password"
-					className="form-control"
-					placeholder="Enter password"
-					onChange={(e) => {
-						setRegisterPassword(e.target.value)
-					}}
-				/>
-			</div>
-			{error && <p>{error}</p>}
-			<div className="d-grid">
-				<button type="submit" className="btn btn-primary" onClick={register}>
-					SignUp With Email
-				</button>
-			</div>
-			<GoogleLogin
-				clientId="496772446537-2d212dp18ghjsdsq76t8g131i964100o.apps.googleusercontent.com"
-				buttonText="Login"
-				onSuccess={responseGoogle}
-				onFailure={responseGoogle}
-				cookiePolicy={'single_host_origin'}
-			/>
-			<FacebookLogin
-				appId="507165660756438"
-				autoLoad={true}
-				fields="name,email,picture"
-				onClick={() => {
-					console.log('clicked')
-				}}
-				callback={responseFacebook}
-			/>
-			<p className="signup text-right">
-				Already registered{' '}
-				<Link className="signup" to={'/signin'}>
-					{' '}
-					sign in?
-				</Link>
-			</p>
-		</form>
-	)
+    e.preventDefault();
+    setError(null);
+    setIsLoading(true);
+    try {
+      const response = await createUserWithEmailAndPassword(
+        auth,
+        registerEmail,
+        registerPassword
+      );
+      if (response) {
+        navigate("/profile");
+      }
+    } catch (error) {
+      setIsLoading(false);
+      setError(error.toString());
+    }
+  };
+
+  return (
+    <form onSubmit={register}>
+      <h2>Sign Up</h2>
+      <div className="mb-3">
+        <label>First name</label>
+        <input
+          type="text"
+          required
+          className="form-control"
+          placeholder="First name"
+        />
+      </div>
+      <div className="mb-3">
+        <label>Last name</label>
+        <input
+          type="text"
+          className="form-control"
+          required
+          placeholder="Last name"
+        />
+      </div>
+      <div className="mb-3">
+        <label>Email address</label>
+        <input
+          type="email"
+          name="email"
+          required
+          className="form-control"
+          placeholder="Enter email"
+          onChange={(e) => {
+            setRegisterEmail(e.target.value);
+          }}
+        />
+      </div>
+      <div className="mb-4">
+        <label>Password</label>
+        <input
+          type="password"
+          name="password"
+          pattern="^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$"
+          title="Please enter atleast 8 characters, including 1 uppercase and special character"
+          required
+          className="form-control"
+          placeholder="Enter password"
+          onChange={(e) => {
+            setRegisterPassword(e.target.value);
+          }}
+        />
+        <span style={{ fontSize: 11, color: "#999", fontWeight: "normal" }}>
+          Should be atleast 8 characters, including uppercase & special
+          characters
+        </span>
+      </div>
+      {error && (
+        <p className="errorText" style={{ fontSize: "10px", color: "red" }}>
+          {error}
+        </p>
+      )}
+      <div className="d-grid">
+        <button type="submit" className="btn btn-primary" disabled={isLoading}>
+          {isLoading ? "Please Wait" : "Sign up"}
+        </button>
+      </div>
+
+      <p className="signup text-right">
+        Already registered{" "}
+        <Link className="signup" to={"/signin"}>
+          {" "}
+          sign in?
+        </Link>
+      </p>
+    </form>
+  );
 }
