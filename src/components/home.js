@@ -4,20 +4,25 @@ import { useNavigate } from 'react-router-dom'
 export default function Home() {
 	let navigate = useNavigate()
 	const [email, setEmail] = useState('')
+	const uEmail = localStorage.getItem('email')
+	const token = localStorage.getItem('AuthToken')
+	const name = localStorage.getItem('name')
 
 	useEffect(() => {
-		const data = localStorage.getItem('email')
-		const token = localStorage.getItem('AuthToken')
-		if (data && token) {
-			setEmail(data)
+		if (token) {
+			setEmail(name || uEmail)
 		} else {
 			navigate('/signin')
 		}
-	}, [navigate])
+	}, [navigate, token])
 
 	const signout = () => {
 		localStorage.removeItem('AuthToken')
 		localStorage.removeItem('email')
+		localStorage.removeItem('name')
+		localStorage.removeItem('id')
+		localStorage.removeItem('socialProvider')
+		localStorage.removeItem('isSocialLogin')
 		navigate('/signin')
 	}
 	const profile = () => {

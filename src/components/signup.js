@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { createUserWithEmailAndPassword } from 'firebase/auth'
 import { auth } from '../firebase-config'
+import { GoogleLogin } from 'react-google-login'
+import FacebookLogin from 'react-facebook-login'
 
 export default function SignUp() {
 	const navigate = useNavigate()
@@ -12,11 +14,34 @@ export default function SignUp() {
 
 	useEffect(() => {
 		const token = localStorage.getItem('AuthToken')
+		console.log({ token })
 		if (token) {
 			navigate('/home')
 		}
 	}, [navigate])
 
+	const responseGoogle = (response) => {
+		if (!response.error) {
+			localStorage.setItem('AuthToken', `${response?.accessToken}`)
+			localStorage.setItem('email', `${response?.profileObj?.email}`)
+			localStorage.setItem('name', `${response?.profileObj?.name}`)
+			localStorage.setItem('id', `${response?.googleId}`)
+			localStorage.setItem('isSocialLogin', true)
+			localStorage.setItem('socialProvider', 'google')
+			navigate('/home')
+		}
+	}
+	const responseFacebook = (response) => {
+		if (!response.error) {
+			localStorage.setItem('AuthToken', `${response?.accessToken}`)
+			localStorage.setItem('email', `${response?.email}`)
+			localStorage.setItem('name', `${response?.name}`)
+			localStorage.setItem('id', `${response?.id}`)
+			localStorage.setItem('isSocialLogin', true)
+			localStorage.setItem('socialProvider', 'facebook')
+			navigate('/home')
+		}
+	}
 	const register = async (e) => {
 		e.preventDefault()
 		setError(null)
@@ -84,6 +109,22 @@ export default function SignUp() {
 					SignUp With Email
 				</button>
 			</div>
+			<GoogleLogin
+				clientId="496772446537-2d212dp18ghjsdsq76t8g131i964100o.apps.googleusercontent.com"
+				buttonText="Login"
+				onSuccess={responseGoogle}
+				onFailure={responseGoogle}
+				cookiePolicy={'single_host_origin'}
+			/>
+			<FacebookLogin
+				appId="507165660756438"
+				autoLoad={true}
+				fields="name,email,picture"
+				onClick={() => {
+					console.log('clicked')
+				}}
+				callback={responseFacebook}
+			/>
 			<p className="signup text-right">
 				Already registered{' '}
 				<Link className="signup" to={'/signin'}>
