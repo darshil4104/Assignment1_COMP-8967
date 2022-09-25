@@ -7,6 +7,7 @@ import Login from './components/login'
 import SignUp from './components/signup'
 import Profile from './components/profile'
 import EditProfile from './components/editProfile'
+import Home from './components/home'
 
 function App() {
 	return (
@@ -20,6 +21,7 @@ function App() {
 							<Route path="/signup" element={<SignUp />} />
 							<Route path="/profile" element={<Profile />} />
 							<Route path="/edit-profile" element={<EditProfile />} />
+							<Route path="/home" element={<Home />} />
 						</Routes>
 					</div>
 				</div>

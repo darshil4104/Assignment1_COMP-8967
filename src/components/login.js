@@ -1,8 +1,41 @@
-import React from 'react'
-import { Link } from 'react-router-dom'
+import React, { useEffect, useState } from 'react'
+import { Link, useNavigate } from 'react-router-dom'
+import { signInWithEmailAndPassword } from 'firebase/auth'
+import { auth } from '../firebase-config'
 
 export default function Login() {
-	console.log('Blah blah')
+	let navigate = useNavigate()
+	const [loginEmail, setLoginEmail] = useState('')
+	const [loginPassword, setLoginPassword] = useState('')
+
+	useEffect(() => {
+		const token = localStorage.getItem('AuthToken')
+		if (token) {
+			navigate('/home')
+		}
+	}, [navigate])
+
+	const login = async (e) => {
+		try {
+			e.preventDefault()
+
+			signInWithEmailAndPassword(auth, loginEmail, loginPassword).then((response) => {
+				if (response?.user?.accessToken) {
+					console.log({ response })
+					localStorage.setItem('AuthToken', `${response?.user?.accessToken}`)
+					localStorage.setItem('email', `${response?.user?.email}`)
+					navigate(`/home`)
+				}
+			})
+			// console.log(user);
+		} catch (error) {
+			console.log(error)
+		}
+	}
+	/*const logout = async () => {
+		await signOut(auth)
+	}*/
+
 	const comingSoon = (e) => {
 		e.preventDefault()
 		alert('Feature Coming Soon')
@@ -13,11 +46,12 @@ export default function Login() {
 			<div className="mb-3">
 				<label>Email</label>
 				<input
+					onChange={(e) => {
+						setLoginEmail(e.target.value)
+					}}
 					type="email"
 					className="form-control"
 					placeholder="Enter email"
-					//   value={this.email}
-					// onChange={this.onUpdateField}
 				/>
 			</div>
 			<div className="mb-3">
@@ -26,13 +60,14 @@ export default function Login() {
 					type="password"
 					className="form-control"
 					placeholder="Enter password"
-					//   value={this.password}
-					// onChange={this.onUpdateField}
+					onChange={(e) => {
+						setLoginPassword(e.target.value)
+					}}
 				/>
 			</div>
 			<div className="d-grid">
-				<button type="submit" className="btn btn-primary" >
-					<a href='/profile' style={{color:"white"}}>Sign In</a>
+				<button type="submit" className="btn btn-primary" onClick={login}>
+					Sign In
 				</button>
 			</div>
 			<p className="signup text-right">
