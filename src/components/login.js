@@ -9,6 +9,7 @@ export default function Login() {
 	let navigate = useNavigate()
 	const [loginEmail, setLoginEmail] = useState('')
 	const [loginPassword, setLoginPassword] = useState('')
+	const { REACT_APP_FACEBOOK_ID, REACT_APP_GOOGLE_CLIENT_ID } = process.env
 
 	useEffect(() => {
 		const token = localStorage.getItem('AuthToken')
@@ -95,14 +96,14 @@ export default function Login() {
 				</button>
 			</div>
 			<GoogleLogin
-				clientId="496772446537-2d212dp18ghjsdsq76t8g131i964100o.apps.googleusercontent.com"
+				clientId={REACT_APP_GOOGLE_CLIENT_ID}
 				buttonText="Login"
 				onSuccess={responseGoogle}
 				onFailure={responseGoogle}
 				cookiePolicy={'single_host_origin'}
 			/>
 			<FacebookLogin
-				appId="507165660756438"
+				appId={REACT_APP_FACEBOOK_ID}
 				autoLoad={true}
 				fields="name,email,picture"
 				onClick={() => {
