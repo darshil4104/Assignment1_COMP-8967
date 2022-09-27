@@ -7,8 +7,8 @@ function Profile() {
 	const navigate = useNavigate()
 	const name = 'Hetvi Patel'
 	const phone = '12345679'
-	const email = 'txt@mail.com'
-	const profileImg = 'http:gravatar.com/avatar/288ce55a011c709f4e17aef7e3c86c64?s=200'
+	const email = 'zeelpatel@yahoo.ca'
+	//const profileImg = 'http:gravatar.com/avatar/288ce55a011c709f4e17aef7e3c86c64?s=200'
 	const bio = 'ljasdjkaskd'
 	const saveProfile = () => {
 		navigate('/profile')

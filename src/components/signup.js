@@ -11,7 +11,7 @@ export default function SignUp() {
 	const [registerEmail, setRegisterEmail] = useState('')
 	const [registerPassword, setRegisterPassword] = useState('')
 	const [error, setError] = useState(null)
-	const { REACT_APP_FACEBOOK_ID, REACT_APP_GOOGLE_CLIENT_ID } = process.env
+	//const { REACT_APP_FACEBOOK_ID, REACT_APP_GOOGLE_CLIENT_ID } = process.env
 
 	useEffect(() => {
 		const token = localStorage.getItem('AuthToken')
@@ -21,29 +21,29 @@ export default function SignUp() {
 		}
 	}, [navigate])
 
-	const responseGoogle = (response) => {
-		console.log(response)
-		if (!response.error) {
-			localStorage.setItem('AuthToken', `${response?.accessToken}`)
-			localStorage.setItem('email', `${response?.profileObj?.email}`)
-			localStorage.setItem('name', `${response?.profileObj?.name}`)
-			localStorage.setItem('id', `${response?.googleId}`)
-			localStorage.setItem('isSocialLogin', true)
-			localStorage.setItem('socialProvider', 'google')
-			navigate('/home')
-		}
-	}
-	const responseFacebook = (response) => {
-		if (!response.error) {
-			localStorage.setItem('AuthToken', `${response?.accessToken}`)
-			localStorage.setItem('email', `${response?.email}`)
-			localStorage.setItem('name', `${response?.name}`)
-			localStorage.setItem('id', `${response?.id}`)
-			localStorage.setItem('isSocialLogin', true)
-			localStorage.setItem('socialProvider', 'facebook')
-			navigate('/home')
-		}
-	}
+	// const responseGoogle = (response) => {
+	// 	console.log(response)
+	// 	if (!response.error) {
+	// 		localStorage.setItem('AuthToken', `${response?.accessToken}`)
+	// 		localStorage.setItem('email', `${response?.profileObj?.email}`)
+	// 		localStorage.setItem('name', `${response?.profileObj?.name}`)
+	// 		localStorage.setItem('id', `${response?.googleId}`)
+	// 		localStorage.setItem('isSocialLogin', true)
+	// 		localStorage.setItem('socialProvider', 'google')
+	// 		navigate('/home')
+	// 	}
+	// }
+	// const responseFacebook = (response) => {
+	// 	if (!response.error) {
+	// 		localStorage.setItem('AuthToken', `${response?.accessToken}`)
+	// 		localStorage.setItem('email', `${response?.email}`)
+	// 		localStorage.setItem('name', `${response?.name}`)
+	// 		localStorage.setItem('id', `${response?.id}`)
+	// 		localStorage.setItem('isSocialLogin', true)
+	// 		localStorage.setItem('socialProvider', 'facebook')
+	// 		navigate('/home')
+	// 	}
+	// }
 	const register = async (e) => {
 		e.preventDefault()
 		setError(null)

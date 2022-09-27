@@ -10,7 +10,7 @@ export default function Home() {
 
 	useEffect(() => {
 		if (token) {
-			setEmail(name || uEmail)
+			setEmail(name)
 		} else {
 			navigate('/signin')
 		}
